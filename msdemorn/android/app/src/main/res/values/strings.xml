@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">msdemorn</string>
+    <string name="title_activity_browser">BrowserActivity</string>
 </resources>

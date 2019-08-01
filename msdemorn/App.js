@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
+  Button,
   View,
   Text,
   StatusBar,
@@ -36,11 +37,18 @@ export default class App extends React.Component{
     return (
       <View style={styles.container}>
 
-        <MinischoolView style={ styles.wrapper } 
+        <Button 
+          onPress = {
+            () => NativeModules.ActivityBrowser.start(studentUrl)
+          }
+          title='Open Browser'
+        />
+
+        {/* <MinischoolView style={ styles.wrapper } 
           url={studentUrl}
           onChangedStatus={this.onChangedStatus}
           onErrorOccured={this.onErrorOccured}
-        />
+        /> */}
 
       </View>
     );
