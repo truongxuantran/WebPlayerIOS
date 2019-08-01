@@ -1,0 +1,1 @@
+This is a repository for minischool framework react native demo app.
