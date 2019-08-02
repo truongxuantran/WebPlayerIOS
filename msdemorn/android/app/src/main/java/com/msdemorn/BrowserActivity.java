@@ -28,43 +28,6 @@ import com.facebook.react.common.LifecycleState;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 
-class BrowserJSInterface {
-    Context context;
-    WebView webView;
-
-    public BrowserJSInterface(Context context, WebView webView) {
-        this.context = context;
-        this.webView = webView;
-    }
-
-    @JavascriptInterface
-    public void onStarted() {
-        Toast.makeText(context, "onStarted", Toast.LENGTH_SHORT).show();
-    }
-
-    @JavascriptInterface
-    public void onWait() {
-        Toast.makeText(context, "onWait", Toast.LENGTH_SHORT).show();
-    }
-
-    @JavascriptInterface
-    public void onEnded() {
-        Toast.makeText(context, "onEnded", Toast.LENGTH_SHORT).show();
-
-        if (this.context instanceof Activity) {
-            ((Activity) this.context).finish();
-        }
-    }
-
-    public void onError(String code) {
-        Toast.makeText(context, "onError: " + code, Toast.LENGTH_SHORT).show();
-
-        if (this.context instanceof Activity) {
-            ((Activity) this.context).finish();
-        }
-    }
-}
-
 public class BrowserActivity extends ReactActivity {
     private ReactRootView reactRootView;
     private ReactInstanceManager reactInstanceManager;
@@ -75,20 +38,7 @@ public class BrowserActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // reactRootView = new ReactRootView(this);
-        // reactInstanceManager = ReactInstanceManager.builder()
-        //         .setApplication(getApplication())
-        //         .setCurrentActivity(this)
-        //         .setBundleAssetName("index.android.bundle")
-        //         .setJSMainModulePath("index")
-        //         .addPackage(new MainReactPackage())
-        //         .setUseDeveloperSupport(BuildConfig.DEBUG)
-        //         .setInitialLifecycleState(LifecycleState.RESUMED)
-        //         .build();
-        // reactRootView.startReactApplication(reactInstanceManager, "msdemorn");
-        // setContentView(reactRootView);
-
-       setContentView(R.layout.activity_browser);
+        setContentView(R.layout.activity_browser);
 
         WebView web = findViewById(R.id.web_main);
         web.getSettings().setJavaScriptEnabled(true);
