@@ -41,10 +41,8 @@ class BrowserJSInterface {
 
     @JavascriptInterface
     public void onStarted() {
-        Toast.makeText(mContext, "onStarted", Toast.LENGTH_SHORT).show();
-
         WritableMap event = Arguments.createMap();
-        event.putString("eName", "onStarted");
+        event.putString("pathName", "onStarted");
         if (this.mContext instanceof ReactContext) {
             ((ReactContext) this.mContext).getJSModule(RCTEventEmitter.class).receiveEvent(this.currentId, "topChange", event);
         }
@@ -57,11 +55,16 @@ class BrowserJSInterface {
 
     @JavascriptInterface
     public void onEnded() {
-        Toast.makeText(mContext, "onEnded", Toast.LENGTH_SHORT).show();
-
-        if (this.mContext instanceof Activity) {
-            ((Activity) this.mContext).finish();
+        WritableMap event = Arguments.createMap();
+        event.putString("pathName", "onEnded");
+        if (this.mContext instanceof ReactContext) {
+            Log.e("onEnded", "onEnded");
+            ((ReactContext) this.mContext).getJSModule(RCTEventEmitter.class).receiveEvent(this.currentId, "topChange", event);
         }
+
+//        if (this.mContext instanceof Activity) {
+//            ((Activity) this.mContext).finish();
+//        }
     }
 
     public void onError(String code) {

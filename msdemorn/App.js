@@ -22,35 +22,29 @@ import {
 
 import { NativeModules, NativeEventEmitter } from 'react-native'
 
-const MinischoolView = requireNativeComponent("MinischoolView")
+const MinischoolView = require('./MinischoolView')
+
+// const MinischoolView = requireNativeComponent("MinischoolView")
 // const studentUrl = "https://dev-p3.ekidpro.com/student/Y2sxNTY0Mzk1NDY0OTA1b75e3d8d31734854a0be338901a68169"
 const studentUrl = "http://103.82.197.22:17000/"
 
 export default class App extends React.Component{
 
-  onChangedStatus = e => {
-    console.log("status: "+e.nativeEvent.status)
+  onStarted = e => {
+    ToastAndroid.show('on started: ' + e.pathName, ToastAndroid.SHORT)
   }
-  onErrorOccured = e => {
-    console.log("error: "+e.nativeEvent.error)
-  }
-  _onChange = e => {
-    ToastAndroid.show('A pikachu appeared nearby !' + e.nativeEvent, ToastAndroid.SHORT)
+
+  onEnded = e => {
+    ToastAndroid.show('on ended: ' + e.pathName, ToastAndroid.SHORT)
   }
 
   render() {
     return (
       <View style={styles.container}>
-
-        <Button
-          title='Open Browser'
-        />
-
         <MinischoolView style={ styles.wrapper } 
           url={studentUrl}
-          onChange={this._onChange}
-          // onChangedStatus={this.onChangedStatus}
-          // onErrorOccured={this.onErrorOccured}
+          onStarted={this.onStarted}
+          onEnded={this.onEnded}
         />
 
       </View>
