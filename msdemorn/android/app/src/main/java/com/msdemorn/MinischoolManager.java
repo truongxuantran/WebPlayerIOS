@@ -30,9 +30,6 @@ public class MinischoolManager extends SimpleViewManager<MinischoolView> {
     @Override
     protected MinischoolView createViewInstance(ThemedReactContext themedReactContext) {
         MinischoolView view = new MinischoolView(themedReactContext, minischoolViewModule.getActivity());
-
-        Log.e("viewid", Integer.toString(view.getId()));
-
         return view;
     }
 

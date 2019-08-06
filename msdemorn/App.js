@@ -17,18 +17,60 @@ import {
   StatusBar,
   TouchableOpacity,
   requireNativeComponent,
-  ToastAndroid
+  ToastAndroid,
+  Platform,
+  Linking,
 } from 'react-native';
-
-import { NativeModules, NativeEventEmitter } from 'react-native'
+import Url from 'url-parse'
 
 const MinischoolView = require('./MinischoolView')
 
-// const MinischoolView = requireNativeComponent("MinischoolView")
-// const studentUrl = "https://dev-p3.ekidpro.com/student/Y2sxNTY0Mzk1NDY0OTA1b75e3d8d31734854a0be338901a68169"
-const studentUrl = "http://103.82.197.22:17000/"
-
 export default class App extends React.Component{
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      student_url: 'https://google.com'
+    }
+  }
+
+  async componentDidMount() {
+    let self = this
+    let url_scheme = ''
+
+    if (Platform.OS === 'android') {
+      url_scheme = await Linking.getInitialURL()
+
+      let url = await this.replaceProtocol(url_scheme)
+      if (url) {
+        self.setState({student_url: url})
+      }
+    } else {
+      await Linking.addEventListener('url', async (url_scheme) => {
+        let url = await self.replaceProtocol(url_scheme)
+
+        if (url) {
+          self.setState({student_url: url})
+        }
+      })
+    }
+  }
+
+  /**
+   * Process replace msp3:// to https:// for url scheme.
+   */
+  replaceProtocol = (url_scheme) => {
+    if (! url_scheme) {
+      return null
+    }
+
+    let url = Url(url_scheme)
+    let protocol_header = 'https'
+    url.set('protocol', protocol_header)
+    
+    return url.href
+  }
 
   onStarted = e => {
     ToastAndroid.show('on started: ' + e.pathName, ToastAndroid.SHORT)
@@ -41,8 +83,8 @@ export default class App extends React.Component{
   render() {
     return (
       <View style={styles.container}>
-        <MinischoolView style={ styles.wrapper } 
-          url={studentUrl}
+        <MinischoolView style={ styles.wrapper }
+          url={this.state.student_url}
           onStarted={this.onStarted}
           onEnded={this.onEnded}
         />
