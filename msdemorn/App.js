@@ -20,7 +20,8 @@ import {
   ToastAndroid,
   Platform,
   Linking,
-} from 'react-native';
+  AppState
+} from 'react-native'
 import Url from 'url-parse'
 
 const MinischoolView = require('./MinischoolView')
@@ -37,18 +38,53 @@ export default class App extends React.Component{
 
   async componentDidMount() {
     let self = this
+
+    // Bind event for detect AppState change from background to active.
+    AppState.addEventListener('change', await self._handleAppStateChange.bind(this));
+
+    // Attach event for update student url when url linking change.
+    Linking.addEventListener('url', async (obj_url)=>{ 
+      let url = await this.replaceProtocol(obj_url.url)
+      if (url) {
+        self.setState({student_url: url})
+      }
+    });
+
+    // Run check custom url scheme first.
+    await self.onChangeStudentUrl()
+  }
+
+  async componentWillUnmount() {
+    let self = this
+
+    AppState.removeEventListener('change', await self._handleAppStateChange.bind(this));
+  }
+
+  async _handleAppStateChange(current_app_state) {
+    let self = this
+
+    if (current_app_state === 'active') {
+      // Re-run check custom url scheme again.
+      await self.onChangeStudentUrl()
+    }
+  }
+
+  async onChangeStudentUrl() {
+    let self = this
     let url_scheme = ''
+    let url = ''
 
     if (Platform.OS === 'android') {
       url_scheme = await Linking.getInitialURL()
 
-      let url = await this.replaceProtocol(url_scheme)
+
+      url = await this.replaceProtocol(url_scheme)
       if (url) {
         self.setState({student_url: url})
       }
     } else {
       await Linking.addEventListener('url', async (url_scheme) => {
-        let url = await self.replaceProtocol(url_scheme)
+        url = await self.replaceProtocol(url_scheme)
 
         if (url) {
           self.setState({student_url: url})
