@@ -1,8 +1,10 @@
 package com.msdemorn;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -82,6 +84,8 @@ public class MinischoolView extends LinearLayout {
     Activity mActivity;
     Context mContext;
 
+    String TAG = "Test123";
+
     public MinischoolView(Context context, Activity activity) {
         super(context);
 
@@ -97,6 +101,11 @@ public class MinischoolView extends LinearLayout {
         web.getSettings().setAllowContentAccess(true);
         web.getSettings().setDomStorageEnabled(true);
         web.getSettings().setMediaPlaybackRequiresUserGesture(false);
+
+        web.getSettings().setAllowFileAccessFromFileURLs(true);
+        web.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+
+
         web.evaluateJavascript("window.isNative = true;", new ValueCallback<String>() {
             @Override
             public void onReceiveValue(String s) {
@@ -110,17 +119,28 @@ public class MinischoolView extends LinearLayout {
                 return false;
             }
         });
-        //        web.setWebChromeClient(new WebChromeClient() {
-//            @Override
-//            public void onPermissionRequest(final PermissionRequest request) {
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        request.grant(request.getResources());
-//                    }
-//                });
-//            }
-//        });
+                web.setWebChromeClient(new WebChromeClient() {
+                    // Grant permissions for cam
+                    @Override
+                    public void onPermissionRequest(final PermissionRequest request) {
+                        Log.d(TAG, "onPermissionRequest");
+                        activity.runOnUiThread(new Runnable() {
+                            @TargetApi(Build.VERSION_CODES.M)
+                            @Override
+                            public void run() {
+                                Log.d(TAG, request.getOrigin().toString());
+                                request.grant(request.getResources());
+//                                if(request.getOrigin().toString().equals("file:///")) {
+//                                    Log.d(TAG, "GRANTED");
+//                                    request.grant(request.getResources());
+//                                } else {
+//                                    Log.d(TAG, "DENIED");
+//                                    request.deny();
+//                                }
+                            }
+                        });
+                    }
+        });
 //
 
     }
