@@ -43,7 +43,7 @@ export default class App extends React.Component{
     AppState.addEventListener('change', await self._handleAppStateChange.bind(this));
 
     // Attach event for update student url when url linking change.
-    Linking.addEventListener('url', async (obj_url)=>{ 
+    Linking.addEventListener('url', async (obj_url)=>{
       let url = await this.replaceProtocol(obj_url.url)
       if (url) {
         self.setState({student_url: url})
@@ -54,6 +54,7 @@ export default class App extends React.Component{
     await self.onChangeStudentUrl()
   }
 
+  // On-remove event bind.
   async componentWillUnmount() {
     let self = this
 

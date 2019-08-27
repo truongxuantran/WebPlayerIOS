@@ -84,7 +84,7 @@ public class MinischoolView extends LinearLayout {
     Activity mActivity;
     Context mContext;
 
-    String TAG = "Test123";
+    String TAG = "request_permission";
 
     public MinischoolView(Context context, Activity activity) {
         super(context);
@@ -119,27 +119,20 @@ public class MinischoolView extends LinearLayout {
                 return false;
             }
         });
-                web.setWebChromeClient(new WebChromeClient() {
-                    // Grant permissions for cam
+        web.setWebChromeClient(new WebChromeClient() {
+            // Grant permissions for cam
+            @Override
+            public void onPermissionRequest(final PermissionRequest request) {
+                Log.d(TAG, "onPermissionRequest");
+                activity.runOnUiThread(new Runnable() {
+                    @TargetApi(Build.VERSION_CODES.M)
                     @Override
-                    public void onPermissionRequest(final PermissionRequest request) {
-                        Log.d(TAG, "onPermissionRequest");
-                        activity.runOnUiThread(new Runnable() {
-                            @TargetApi(Build.VERSION_CODES.M)
-                            @Override
-                            public void run() {
-                                Log.d(TAG, request.getOrigin().toString());
-                                request.grant(request.getResources());
-//                                if(request.getOrigin().toString().equals("file:///")) {
-//                                    Log.d(TAG, "GRANTED");
-//                                    request.grant(request.getResources());
-//                                } else {
-//                                    Log.d(TAG, "DENIED");
-//                                    request.deny();
-//                                }
-                            }
-                        });
+                    public void run() {
+                        Log.d(TAG, request.getOrigin().toString());
+                        request.grant(request.getResources());
                     }
+                });
+            }
         });
 //
 
