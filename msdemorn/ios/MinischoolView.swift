@@ -36,6 +36,8 @@ class MinischoolView: UIView, MSPlayerDelegate {
   override init(frame: CGRect) {
     super.init(frame: frame)
 
+    print("MinischoolView init frame: \(frame.debugDescription)")
+    
     containerView = UIView.init(frame: frame)
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     self.addSubview(containerView)
