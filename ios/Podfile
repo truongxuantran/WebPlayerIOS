@@ -28,20 +28,12 @@ target 'msdemorn' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
   target 'msdemornTests' do
     inherit! :search_paths
     # Pods for testing
   end
 
   use_native_modules!
-end
-
-target 'msdemorn-tvOS' do
-  # Pods for msdemorn-tvOS
-
-  target 'msdemorn-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
 end

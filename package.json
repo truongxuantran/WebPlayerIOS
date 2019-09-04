@@ -10,6 +10,7 @@
   "dependencies": {
     "react": "16.8.6",
     "react-native": "0.60.4",
+    "react-native-webview": "^7.0.2",
     "url-parse": "^1.4.7"
   },
   "devDependencies": {

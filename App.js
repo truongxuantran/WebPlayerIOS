@@ -23,6 +23,7 @@ import {
   AppState
 } from 'react-native'
 import Url from 'url-parse'
+import { WebView } from 'react-native-webview';
 
 const MinischoolView = require('./MinischoolView')
 
@@ -32,7 +33,8 @@ export default class App extends React.Component{
     super(props)
 
     this.state = {
-      student_url: 'https://google.com'
+      init_url: 'https://dev-admin.ekidpro.com/bts',
+      student_url: ''
     }
   }
 
@@ -118,16 +120,41 @@ export default class App extends React.Component{
   }
 
   render() {
+    /*
+          <View style={styles.container}>
+        <WebView source={{ uri: this.state.init_url }}
+          onNavigationStateChange={this.onNavigationStateChange}
+        />
+      </View>
+
+    */
     return (
       <View style={styles.container}>
-        <MinischoolView style={ styles.wrapper }
-          url={this.state.student_url}
-          onStarted={this.onStarted}
-          onEnded={this.onEnded}
-        />
-
-      </View>
+          <MinischoolView style={ styles.wrapper }
+            url={this.state.init_url}
+            onStarted={this.onStarted}
+            onEnded={this.onEnded}
+          />
+      </View>      
     );
+  }
+
+  onNavigationStateChange = (webViewState) => {
+    console.log('onNavigationStateChange: '+webViewState.url)
+    if (webViewState.url.url_scheme == 'msp3') {
+      webViewState.url.url_scheme = 'https';
+      this.state.student_url = webViewState.url;
+      console.log('this.state.student_url : '+this.state.student_url)
+      React.render(
+          <View style={styles.container}>
+            <MinischoolView style={ styles.wrapper }
+              url={this.state.student_url}
+              onStarted={this.onStarted}
+              onEnded={this.onEnded}
+            />
+          </View>
+      );
+    }
   }
 }
 const styles = StyleSheet.create({
