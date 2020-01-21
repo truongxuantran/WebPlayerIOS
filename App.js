@@ -32,7 +32,7 @@ export default class App extends React.Component{
     super(props)
 
     this.state = {
-      student_url: 'https://dev-admin.ekidpro.com/bts'
+      student_url: 'https://stage-hs-admin.minischool.co.kr/bts'
     }
   }
 
