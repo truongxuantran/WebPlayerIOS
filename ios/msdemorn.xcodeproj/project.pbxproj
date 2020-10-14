@@ -259,7 +259,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 6W3DRU7PN2;
-						LastSwiftMigration = 1030;
+						LastSwiftMigration = "";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -492,7 +492,9 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = msdemorn/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -527,7 +529,9 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = msdemorn/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
