@@ -74,17 +74,17 @@ export default class App extends React.Component {
         );
       }
     );
-    // requestMultiple([PERMISSIONS.IOS.CAMERA, PERMISSIONS.IOS.MICROPHONE]).then(
-    //   (statuses) => {
-    //     Alert.alert(
-    //       "Camera: " +
-    //         statuses[PERMISSIONS.IOS.CAMERA] +
-    //         "\n" +
-    //         "Micro: " +
-    //         statuses[PERMISSIONS.IOS.MICROPHONE]
-    //     );
-    //   }
-    // );
+    requestMultiple([PERMISSIONS.IOS.CAMERA, PERMISSIONS.IOS.MICROPHONE]).then(
+      (statuses) => {
+        Alert.alert(
+          "Camera: " +
+            statuses[PERMISSIONS.IOS.CAMERA] +
+            "\n" +
+            "Micro: " +
+            statuses[PERMISSIONS.IOS.MICROPHONE]
+        );
+      }
+    );
   }
 
   // On-remove event bind.
@@ -155,11 +155,11 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <MinischoolView style={ styles.wrapper }
+        {/* <MinischoolView style={ styles.wrapper }
             url={this.state.student_url}
             onStarted={this.onStarted}
             onEnded={this.onEnded}
-          />
+          /> */}
       </View>
     );
   }
