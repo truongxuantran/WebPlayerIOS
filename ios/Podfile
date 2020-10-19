@@ -29,6 +29,9 @@ target 'msdemorn' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
+  pod 'Permission-Camera', :path => "../node_modules/react-native-permissions/ios/Camera.podspec"
+  pod 'Permission-Microphone', :path => "../node_modules/react-native-permissions/ios/Microphone.podspec"
+
   target 'msdemornTests' do
     inherit! :search_paths
     # Pods for testing
